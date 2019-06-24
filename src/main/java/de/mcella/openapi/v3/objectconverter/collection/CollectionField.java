@@ -11,6 +11,9 @@ public interface CollectionField {
   void addField(Field field, Map<String, Object> properties, ObjectConverter objectConverter)
       throws ObjectConverterException;
 
+  void addItem(String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
+      throws ObjectConverterException;
+
   void addItems(String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
       throws ObjectConverterException;
 }

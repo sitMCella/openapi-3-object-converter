@@ -31,6 +31,11 @@ public class ObjectConverter {
         insertStandardType(typeName, properties);
         return;
       }
+      if (collectionDataTypes.isCollectionDataType(typeName)) {
+        CollectionField collectionField = collectionDataTypes.getCollectionField(typeName);
+        collectionField.addItem(typeName, properties, this);
+        return;
+      }
       Class<?> clazz = Class.forName(typeName);
       convert(clazz, properties);
     } catch (ClassNotFoundException e) {

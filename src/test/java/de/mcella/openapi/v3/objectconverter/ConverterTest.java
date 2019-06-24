@@ -543,6 +543,32 @@ public class ConverterTest {
     verifyPathsSection(expectedSchema);
   }
 
+  @Test
+  public void shouldConvertClassWithOneMapOfStringToListOfIntegerWrapperClassField()
+      throws ObjectConverterException, IOException {
+    String className =
+        "de.mcella.openapi.v3.objectconverter.MapOfStringToListOfIntegerWrapperClassField";
+
+    Converter.convert(className);
+
+    List<String> expectedSchema =
+        List.of(
+            "            schema:",
+            "              type: object",
+            "              properties:",
+            "                fields:",
+            "                  type: object",
+            "                  additionalProperties:",
+            "                    type: array",
+            "                    items:",
+            "                      type: object",
+            "                      properties:",
+            "                        field:",
+            "                          type: integer",
+            "                          format: int32");
+    verifyPathsSection(expectedSchema);
+  }
+
   private void verifyTemplateSections(
       List<String> expectedInfoSection,
       List<String> expectedOpenApiVersionSection,

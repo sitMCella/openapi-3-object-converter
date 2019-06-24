@@ -46,6 +46,21 @@ public class MapField implements CollectionField {
   }
 
   @Override
+  public void addItem(
+      String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
+      throws ObjectConverterException {
+	  if (!typeName.startsWith(DICTIONARY_PATTERN)) {
+	      throw new ObjectConverterException(
+	          String.format("Cannot convert object map field with type: %s", typeName));
+	    }
+	    String valueTypeName = getValueTypeName(typeName);
+	    Map<String, Object> additionalProperties = new LinkedHashMap<>();
+	    objectConverter.convert(valueTypeName, additionalProperties);
+	    properties.put("type", "object");
+	    properties.put("additionalProperties", additionalProperties);
+  }
+
+  @Override
   public void addItems(
       String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
       throws ObjectConverterException {

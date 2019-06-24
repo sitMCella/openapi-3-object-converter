@@ -40,6 +40,16 @@ public class ListField implements CollectionField {
   }
 
   @Override
+  public void addItem(
+      String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
+      throws ObjectConverterException {
+    String fieldTypeName =
+        typeName.substring(LIST_TYPE_NAME_PATTERN.length(), typeName.length() - 1);
+    properties.put("type", "array");
+    objectConverter.convertList(fieldTypeName, properties);
+  }
+
+  @Override
   public void addItems(
       String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
       throws ObjectConverterException {
