@@ -1,6 +1,6 @@
 package de.mcella.openapi.v3.objectconverter.collection;
 
-import de.mcella.openapi.v3.objectconverter.ObjectConverter;
+import de.mcella.openapi.v3.objectconverter.ConverterService;
 import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
 
 import java.lang.reflect.Field;
@@ -13,8 +13,14 @@ public class MapField implements CollectionField {
 
   private static final String DICTIONARY_PATTERN = "java.util.Map<java.lang.String, ";
 
+  private final ConverterService converterService;
+
+  public MapField(ConverterService converterService) {
+    this.converterService = converterService;
+  }
+
   @Override
-  public void addField(Field field, Map<String, Object> properties, ObjectConverter objectConverter)
+  public void addField(Field field, Map<String, Object> properties)
       throws ObjectConverterException {
     Map<String, Object> fieldProperties = new LinkedHashMap<>();
     fieldProperties.put("type", "object");
@@ -29,7 +35,7 @@ public class MapField implements CollectionField {
               String.format("Cannot convert object map field with type: %s", fieldTypeName));
         }
         String valueType = actualTypeArguments[1].getTypeName();
-        objectConverter.convert(valueType, additionalProperties);
+        converterService.convert(valueType, additionalProperties);
       } else if (actualTypeArguments.length == 0) {
         throw new ObjectConverterException(
             String.format("Cannot convert from nested parametrised: %s", fieldTypeName));
@@ -46,23 +52,7 @@ public class MapField implements CollectionField {
   }
 
   @Override
-  public void addItem(
-      String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
-      throws ObjectConverterException {
-	  if (!typeName.startsWith(DICTIONARY_PATTERN)) {
-	      throw new ObjectConverterException(
-	          String.format("Cannot convert object map field with type: %s", typeName));
-	    }
-	    String valueTypeName = getValueTypeName(typeName);
-	    Map<String, Object> additionalProperties = new LinkedHashMap<>();
-	    objectConverter.convert(valueTypeName, additionalProperties);
-	    properties.put("type", "object");
-	    properties.put("additionalProperties", additionalProperties);
-  }
-
-  @Override
-  public void addItems(
-      String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
+  public void addItem(String typeName, Map<String, Object> properties)
       throws ObjectConverterException {
     if (!typeName.startsWith(DICTIONARY_PATTERN)) {
       throw new ObjectConverterException(
@@ -70,7 +60,21 @@ public class MapField implements CollectionField {
     }
     String valueTypeName = getValueTypeName(typeName);
     Map<String, Object> additionalProperties = new LinkedHashMap<>();
-    objectConverter.convert(valueTypeName, additionalProperties);
+    converterService.convert(valueTypeName, additionalProperties);
+    properties.put("type", "object");
+    properties.put("additionalProperties", additionalProperties);
+  }
+
+  @Override
+  public void addItems(String typeName, Map<String, Object> properties)
+      throws ObjectConverterException {
+    if (!typeName.startsWith(DICTIONARY_PATTERN)) {
+      throw new ObjectConverterException(
+          String.format("Cannot convert object map field with type: %s", typeName));
+    }
+    String valueTypeName = getValueTypeName(typeName);
+    Map<String, Object> additionalProperties = new LinkedHashMap<>();
+    converterService.convert(valueTypeName, additionalProperties);
     Map<String, Object> fieldProperties = new LinkedHashMap<>();
     fieldProperties.put("type", "object");
     fieldProperties.put("additionalProperties", additionalProperties);

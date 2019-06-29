@@ -1,10 +1,10 @@
 package de.mcella.openapi.v3.objectconverter.datatype;
 
+import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
 
 public class StandardDataTypes {
 
@@ -38,14 +38,6 @@ public class StandardDataTypes {
     return StandardDataType.isStandardDataType(typeName);
   }
 
-  public boolean isStandardDataType(Class<?> clazz) {
-    return StandardDataType.isStandardDataType(clazz);
-  }
-
-  public boolean isPrimitiveDataType(String typeName) {
-    return StandardDataType.isPrimitiveDataType(typeName);
-  }
-
   public StandardField getStandardField(String typeName) throws ObjectConverterException {
     StandardDataType standardDataType = getStandardDataType(typeName);
     StandardField standardField = standardDataTypes.get(standardDataType);
@@ -54,6 +46,12 @@ public class StandardDataTypes {
           String.format("Cannot find standard field from type name: %s", typeName));
     }
     return standardField;
+  }
+
+  public void addItems(String typeName, Map<String, Object> properties)
+      throws ObjectConverterException {
+    StandardField standardField = getStandardField(typeName);
+    standardField.addField("items", properties);
   }
 
   private StandardDataType getStandardDataType(String typeName) throws ObjectConverterException {

@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
 
-import de.mcella.openapi.v3.objectconverter.ObjectConverter;
+import de.mcella.openapi.v3.objectconverter.ConverterService;
 import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
 
 import static org.mockito.Mockito.mock;
@@ -23,19 +23,19 @@ import java.lang.reflect.Type;
 
 public class ListFieldTest {
 
-  private final ObjectConverter objectConverter = mock(ObjectConverter.class);
+  private final ConverterService converterService = mock(ConverterService.class);
 
   private ListField listField;
   private Map<String, Object> properties;
 
   @Before
   public void setUp() {
-    this.listField = new ListField();
+    this.listField = new ListField(converterService);
     this.properties = new HashMap<>();
   }
 
   @Test
-  public void shouldAddListFieldIntoPropertiesMap() throws ObjectConverterException {
+  public void shouldConvertListOfStringField() throws ObjectConverterException {
     Field field = mock(Field.class);
     ParameterizedType type = mock(ParameterizedType.class);
     when(field.getGenericType()).thenReturn(type);
@@ -46,27 +46,38 @@ public class ListFieldTest {
     when(type.getActualTypeArguments()).thenReturn(actualTypeArguments);
     when(value.getTypeName()).thenReturn("java.lang.String");
 
-    listField.addField(field, properties, objectConverter);
+    listField.addField(field, properties);
 
     ArgumentCaptor<String> valueTypeArgument = ArgumentCaptor.forClass(String.class);
     @SuppressWarnings("unchecked")
     ArgumentCaptor<Map<String, Object>> fieldPropertiesArgument =
         ArgumentCaptor.forClass(Map.class);
-    verify(objectConverter)
-        .convertList(valueTypeArgument.capture(), fieldPropertiesArgument.capture());
+    verify(converterService)
+        .addItems(valueTypeArgument.capture(), fieldPropertiesArgument.capture());
     assertThat(valueTypeArgument.getValue(), equalTo("java.lang.String"));
-    Map<String, Object> fieldProperties1 = fieldPropertiesArgument.getValue();
-    assertThat(fieldProperties1.size(), equalTo(1));
-    assertTrue(fieldProperties1.containsKey("type"));
-    assertThat(fieldProperties1.get("type"), equalTo("array"));
+    verifyFieldProperties(fieldPropertiesArgument.getValue());
+  }
+
+  @Test
+  public void shouldCreateConvertedListFieldItem() throws ObjectConverterException {
+    Field field = mock(Field.class);
+    ParameterizedType type = mock(ParameterizedType.class);
+    when(field.getGenericType()).thenReturn(type);
+    when(field.getName()).thenReturn("fieldName");
+    when(type.getTypeName()).thenReturn("java.util.List<java.lang.String>");
+    Type value = mock(Type.class);
+    Type[] actualTypeArguments = new Type[] {value};
+    when(type.getActualTypeArguments()).thenReturn(actualTypeArguments);
+    when(value.getTypeName()).thenReturn("java.lang.String");
+
+    listField.addField(field, properties);
+
     assertThat(properties.size(), equalTo(1));
     assertTrue(properties.containsKey("fieldName"));
     assertTrue(properties.get("fieldName") instanceof java.util.Map);
     @SuppressWarnings("unchecked")
-    Map<String, Object> fieldProperties2 = (Map<String, Object>) properties.get("fieldName");
-    assertThat(fieldProperties2.size(), equalTo(1));
-    assertTrue(fieldProperties2.containsKey("type"));
-    assertThat(fieldProperties2.get("type"), equalTo("array"));
+    Map<String, Object> fieldProperties = (Map<String, Object>) properties.get("fieldName");
+    verifyFieldProperties(fieldProperties);
   }
 
   @Test(expected = ObjectConverterException.class)
@@ -77,12 +88,12 @@ public class ListFieldTest {
     when(field.getGenericType()).thenReturn(type);
     when(type.getTypeName()).thenReturn("java.util.List<java.lang.String>");
 
-    listField.addField(field, properties, objectConverter);
+    listField.addField(field, properties);
   }
 
   @Test(expected = ObjectConverterException.class)
   public void
-      shouldThrowObjectConverterExceptionOnAddFieldFromParameterizedTypeFieldWithZeroActualTypeArgumentsCount()
+      shouldThrowObjectConverterExceptionOnAddFieldFromParameterizedTypeFieldWithZeroTypeArgumentsCount()
           throws ObjectConverterException {
     Field field = mock(Field.class);
     ParameterizedType type = mock(ParameterizedType.class);
@@ -90,12 +101,12 @@ public class ListFieldTest {
     when(type.getTypeName()).thenReturn("java.util.List<java.lang.String>");
     when(type.getActualTypeArguments()).thenReturn(new Type[0]);
 
-    listField.addField(field, properties, objectConverter);
+    listField.addField(field, properties);
   }
 
   @Test(expected = ObjectConverterException.class)
   public void
-      shouldThrowObjectConverterExceptionOnAddFieldFromParameterizedTypeFieldWithTwoActualTypeArgumentsCount()
+      shouldThrowObjectConverterExceptionOnAddFieldFromParameterizedTypeFieldWithTwoTypeArgumentsCount()
           throws ObjectConverterException {
     Field field = mock(Field.class);
     ParameterizedType type = mock(ParameterizedType.class);
@@ -106,33 +117,67 @@ public class ListFieldTest {
     Type[] actualTypeArguments = new Type[] {value, anotherValue};
     when(type.getActualTypeArguments()).thenReturn(actualTypeArguments);
 
-    listField.addField(field, properties, objectConverter);
+    listField.addField(field, properties);
   }
 
   @Test
-  public void shouldAddListOfListItemsIntoPropertiesMap() throws ObjectConverterException {
+  public void shouldConvertListOfStringFieldOnAddItem() throws ObjectConverterException {
     String typeName = "java.util.List<java.lang.String>";
 
-    listField.addItems(typeName, properties, objectConverter);
+    listField.addItem(typeName, properties);
 
     ArgumentCaptor<String> valueTypeArgument = ArgumentCaptor.forClass(String.class);
     @SuppressWarnings("unchecked")
     ArgumentCaptor<Map<String, Object>> fieldPropertiesArgument =
         ArgumentCaptor.forClass(Map.class);
-    verify(objectConverter)
-        .convertList(valueTypeArgument.capture(), fieldPropertiesArgument.capture());
+    verify(converterService)
+        .addItems(valueTypeArgument.capture(), fieldPropertiesArgument.capture());
     assertThat(valueTypeArgument.getValue(), equalTo("java.lang.String"));
-    Map<String, Object> fieldProperties1 = fieldPropertiesArgument.getValue();
-    assertThat(fieldProperties1.size(), equalTo(1));
-    assertTrue(fieldProperties1.containsKey("type"));
-    assertThat(fieldProperties1.get("type"), equalTo("array"));
+    verifyFieldProperties(fieldPropertiesArgument.getValue());
+  }
+
+  @Test
+  public void shoulCreateConvertedListOfStringItemOnAddItem() throws ObjectConverterException {
+    String typeName = "java.util.List<java.lang.String>";
+
+    listField.addItem(typeName, properties);
+
+    verifyFieldProperties(properties);
+  }
+
+  @Test
+  public void shouldConvertListOfStringFieldOnAddItems() throws ObjectConverterException {
+    String typeName = "java.util.List<java.lang.String>";
+
+    listField.addItems(typeName, properties);
+
+    ArgumentCaptor<String> valueTypeArgument = ArgumentCaptor.forClass(String.class);
+    @SuppressWarnings("unchecked")
+    ArgumentCaptor<Map<String, Object>> fieldPropertiesArgument =
+        ArgumentCaptor.forClass(Map.class);
+    verify(converterService)
+        .addItems(valueTypeArgument.capture(), fieldPropertiesArgument.capture());
+    assertThat(valueTypeArgument.getValue(), equalTo("java.lang.String"));
+    verifyFieldProperties(fieldPropertiesArgument.getValue());
+  }
+
+  @Test
+  public void shouldCreateConvertedListOfStringItemOnAddItems() throws ObjectConverterException {
+    String typeName = "java.util.List<java.lang.String>";
+
+    listField.addItems(typeName, properties);
+
     assertThat(properties.size(), equalTo(1));
     assertTrue(properties.containsKey("items"));
     assertTrue(properties.get("items") instanceof java.util.Map);
     @SuppressWarnings("unchecked")
-    Map<String, Object> fieldProperties2 = (Map<String, Object>) properties.get("items");
-    assertThat(fieldProperties2.size(), equalTo(1));
-    assertTrue(fieldProperties2.containsKey("type"));
-    assertThat(fieldProperties2.get("type"), equalTo("array"));
+    Map<String, Object> fieldProperties = (Map<String, Object>) properties.get("items");
+    verifyFieldProperties(fieldProperties);
+  }
+
+  private void verifyFieldProperties(Map<String, Object> fieldProperties) {
+    assertThat(fieldProperties.size(), equalTo(1));
+    assertTrue(fieldProperties.containsKey("type"));
+    assertThat(fieldProperties.get("type"), equalTo("array"));
   }
 }

@@ -1,19 +1,20 @@
 package de.mcella.openapi.v3.objectconverter.collection;
 
+import de.mcella.openapi.v3.objectconverter.ConverterService;
+import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
 
 public class CollectionDataTypes {
 
   private final Map<CollectionDataType, CollectionField> collectionDataTypes;
 
-  public CollectionDataTypes() {
+  public CollectionDataTypes(ConverterService converterService) {
     Map<CollectionDataType, CollectionField> collectionDataTypes = new HashMap<>();
-    collectionDataTypes.put(CollectionDataType.LIST, new ListField());
-    collectionDataTypes.put(CollectionDataType.MAP, new MapField());
+    collectionDataTypes.put(CollectionDataType.LIST, new ListField(converterService));
+    collectionDataTypes.put(CollectionDataType.MAP, new MapField(converterService));
     this.collectionDataTypes = Collections.unmodifiableMap(collectionDataTypes);
   }
 

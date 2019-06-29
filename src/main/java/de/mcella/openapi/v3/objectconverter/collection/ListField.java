@@ -1,6 +1,6 @@
 package de.mcella.openapi.v3.objectconverter.collection;
 
-import de.mcella.openapi.v3.objectconverter.ObjectConverter;
+import de.mcella.openapi.v3.objectconverter.ConverterService;
 import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
 
 import java.lang.reflect.Field;
@@ -13,8 +13,14 @@ public class ListField implements CollectionField {
 
   private static final String LIST_TYPE_NAME_PATTERN = "java.util.List<";
 
+  private final ConverterService converterService;
+
+  public ListField(ConverterService converterService) {
+    this.converterService = converterService;
+  }
+
   @Override
-  public void addField(Field field, Map<String, Object> properties, ObjectConverter objectConverter)
+  public void addField(Field field, Map<String, Object> properties)
       throws ObjectConverterException {
     Map<String, Object> fieldProperties = new LinkedHashMap<>();
     fieldProperties.put("type", "array");
@@ -24,7 +30,7 @@ public class ListField implements CollectionField {
       Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
       if (actualTypeArguments.length == 1) {
         String valueType = actualTypeArguments[0].getTypeName();
-        objectConverter.convertList(valueType, fieldProperties);
+        converterService.addItems(valueType, fieldProperties);
       } else if (actualTypeArguments.length == 0) {
         throw new ObjectConverterException(
             String.format("Cannot convert from nested parametrised: %s", fieldTypeName));
@@ -40,24 +46,22 @@ public class ListField implements CollectionField {
   }
 
   @Override
-  public void addItem(
-      String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
+  public void addItem(String typeName, Map<String, Object> properties)
       throws ObjectConverterException {
     String fieldTypeName =
         typeName.substring(LIST_TYPE_NAME_PATTERN.length(), typeName.length() - 1);
     properties.put("type", "array");
-    objectConverter.convertList(fieldTypeName, properties);
+    converterService.addItems(fieldTypeName, properties);
   }
 
   @Override
-  public void addItems(
-      String typeName, Map<String, Object> properties, ObjectConverter objectConverter)
+  public void addItems(String typeName, Map<String, Object> properties)
       throws ObjectConverterException {
     String fieldTypeName =
         typeName.substring(LIST_TYPE_NAME_PATTERN.length(), typeName.length() - 1);
     Map<String, Object> fieldProperties = new LinkedHashMap<>();
     fieldProperties.put("type", "array");
-    objectConverter.convertList(fieldTypeName, fieldProperties);
+    converterService.addItems(fieldTypeName, fieldProperties);
     properties.put("items", fieldProperties);
   }
 }

@@ -1,19 +1,23 @@
 package de.mcella.openapi.v3.objectconverter.collection;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import de.mcella.openapi.v3.objectconverter.ConverterService;
 import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
 
 public class CollectionDataTypesTest {
+
+  private final ConverterService converterService = mock(ConverterService.class);
 
   private CollectionDataTypes collectionDataTypes;
 
   @Before
   public void setUp() {
-    this.collectionDataTypes = new CollectionDataTypes();
+    this.collectionDataTypes = new CollectionDataTypes(converterService);
   }
 
   @Test

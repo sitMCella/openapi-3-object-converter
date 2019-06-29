@@ -1,4 +1,4 @@
-package de.mcella.openapi.v3.objectconverter;
+package de.mcella.openapi.v3.objectconverter.example;
 
 public class LongPrimitiveField {
   public final long field;

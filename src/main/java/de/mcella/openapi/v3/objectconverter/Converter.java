@@ -1,22 +1,18 @@
 package de.mcella.openapi.v3.objectconverter;
 
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import de.mcella.openapi.v3.objectconverter.collection.CollectionDataTypes;
-import de.mcella.openapi.v3.objectconverter.datatype.StandardDataTypes;
-
-import org.yaml.snakeyaml.DumperOptions;
-
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.util.stream.Stream;
-import java.nio.charset.Charset;
 
 public class Converter {
 
@@ -40,10 +36,7 @@ public class Converter {
       Yaml yaml = new Yaml(options);
       FileWriter writer = new FileWriter(outputFile.toFile());
 
-      StandardDataTypes standardDataTypes = new StandardDataTypes();
-      CollectionDataTypes collectionDataTypes = new CollectionDataTypes();
-      ObjectConverter objectConverter = new ObjectConverter(standardDataTypes, collectionDataTypes);
-      Map<String, Object> schemaDefinition = objectConverter.convert(className);
+      Map<String, Object> schemaDefinition = ConverterFactory.getInstance().convert(className);
 
       Template template = new Template();
       template.addRequestBodyContent(new Schema(schemaDefinition));

@@ -34,7 +34,7 @@ public enum StandardDataType {
   public static StandardDataType fromTypeName(String typeName)
       throws StandardDataTypeNotFoundException {
     for (StandardDataType standardDataType : values()) {
-      if (standardDataType.getTypeName() == typeName) {
+      if (standardDataType.getTypeName().equals(typeName)) {
         return standardDataType;
       }
     }
@@ -43,22 +43,10 @@ public enum StandardDataType {
 
   public static boolean isStandardDataType(String typeName) {
     for (StandardDataType standardDataType : values()) {
-      if (standardDataType.getTypeName() == typeName) {
+      if (standardDataType.getTypeName().equals(typeName)) {
         return true;
       }
     }
     return false;
-  }
-
-  public static boolean isStandardDataType(Class<?> clazz) {
-    return isStandardDataType(clazz.getCanonicalName());
-  }
-
-  public static boolean isPrimitiveDataType(String typeName) {
-    try {
-      return fromTypeName(typeName).isPrimitive();
-    } catch (StandardDataTypeNotFoundException e) {
-      return false;
-    }
   }
 }

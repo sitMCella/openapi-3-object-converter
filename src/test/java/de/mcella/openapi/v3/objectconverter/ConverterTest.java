@@ -2,6 +2,10 @@ package de.mcella.openapi.v3.objectconverter;
 
 import org.junit.Test;
 
+import de.mcella.openapi.v3.objectconverter.Converter;
+import de.mcella.openapi.v3.objectconverter.ObjectConverterException;
+import de.mcella.openapi.v3.objectconverter.ObjectConverterMain;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -50,7 +54,7 @@ public class ConverterTest {
   @Test
   public void shouldCreateYamlFileDuringClassConvert()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.PublicStringField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.PublicStringField";
 
     Converter.convert(className);
 
@@ -60,7 +64,7 @@ public class ConverterTest {
   @Test
   public void shouldCreateYamlTemplateSectionsDuringClassConvert()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.PublicStringField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.PublicStringField";
 
     Converter.convert(className);
 
@@ -225,7 +229,7 @@ public class ConverterTest {
 
   @Test
   public void shouldConvertClassWithOneStringField() throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.PublicStringField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.PublicStringField";
 
     Converter.convert(className);
 
@@ -242,7 +246,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneIntegerWrapperField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.IntegerWrapperField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.IntegerWrapperField";
 
     Converter.convert(className);
 
@@ -260,7 +264,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneIntegerPrimitiveField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.IntegerPrimitiveField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.IntegerPrimitiveField";
 
     Converter.convert(className);
 
@@ -278,7 +282,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneLongWrapperField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.LongWrapperField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.LongWrapperField";
 
     Converter.convert(className);
 
@@ -296,7 +300,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneLongPrimitiveField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.LongPrimitiveField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.LongPrimitiveField";
 
     Converter.convert(className);
 
@@ -314,7 +318,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOnePrivateStringField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.PrivateStringField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.PrivateStringField";
 
     Converter.convert(className);
 
@@ -331,7 +335,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneListOfStringsField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.ListOfStringsField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.ListOfStringsField";
 
     Converter.convert(className);
 
@@ -350,7 +354,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneListOfIntegersField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.ListOfIntegerWrappersField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.ListOfIntegerWrappersField";
 
     Converter.convert(className);
 
@@ -370,7 +374,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneListOfListsOfStringField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.ListOfListOfStringsField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.ListOfListOfStringsField";
 
     Converter.convert(className);
 
@@ -391,7 +395,8 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneListOfListsOfListsOfStringField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.ListOfListOfListOfStringsField";
+    String className =
+        "de.mcella.openapi.v3.objectconverter.example.ListOfListOfListOfStringsField";
 
     Converter.convert(className);
 
@@ -414,7 +419,8 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneListOfIntegerWrapperClassField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.ListOfIntegerWrapperClassField";
+    String className =
+        "de.mcella.openapi.v3.objectconverter.example.ListOfIntegerWrapperClassField";
 
     Converter.convert(className);
 
@@ -437,7 +443,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneMapOfStringToStringField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.MapOfStringToStringField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.MapOfStringToStringField";
 
     Converter.convert(className);
 
@@ -456,7 +462,7 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneMapOfStringToIntegerField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.MapOfStringToIntegerField";
+    String className = "de.mcella.openapi.v3.objectconverter.example.MapOfStringToIntegerField";
 
     Converter.convert(className);
 
@@ -476,7 +482,8 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneMapOfStringToIntegerWrapperClassField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.MapOfStringToIntegerWrapperClassField";
+    String className =
+        "de.mcella.openapi.v3.objectconverter.example.MapOfStringToIntegerWrapperClassField";
 
     Converter.convert(className);
 
@@ -499,7 +506,8 @@ public class ConverterTest {
   @Test
   public void shouldConvertClassWithOneListOfMapOfStringToStringField()
       throws ObjectConverterException, IOException {
-    String className = "de.mcella.openapi.v3.objectconverter.ListOfMapOfStringToStringField";
+    String className =
+        "de.mcella.openapi.v3.objectconverter.example.ListOfMapOfStringToStringField";
 
     Converter.convert(className);
 
@@ -521,7 +529,7 @@ public class ConverterTest {
   public void shouldConvertClassWithOneListOfMapOfStringToIntegerWrapperClassField()
       throws ObjectConverterException, IOException {
     String className =
-        "de.mcella.openapi.v3.objectconverter.ListOfMapOfStringToIntegerWrapperClassField";
+        "de.mcella.openapi.v3.objectconverter.example.ListOfMapOfStringToIntegerWrapperClassField";
 
     Converter.convert(className);
 
@@ -547,7 +555,7 @@ public class ConverterTest {
   public void shouldConvertClassWithOneMapOfStringToListOfIntegerWrapperClassField()
       throws ObjectConverterException, IOException {
     String className =
-        "de.mcella.openapi.v3.objectconverter.MapOfStringToListOfIntegerWrapperClassField";
+        "de.mcella.openapi.v3.objectconverter.example.MapOfStringToListOfIntegerWrapperClassField";
 
     Converter.convert(className);
 
