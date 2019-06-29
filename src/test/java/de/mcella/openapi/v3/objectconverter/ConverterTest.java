@@ -62,7 +62,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void shouldCreateYamlTemplateSectionsDuringClassConvert()
+  public void shouldCreateYamlTemplateSectionsDuringConvertion()
       throws ObjectConverterException, IOException {
     String className = "de.mcella.openapi.v3.objectconverter.example.PublicStringField";
 
@@ -104,7 +104,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void shouldConvertInteger() throws ObjectConverterException, IOException {
+  public void shouldConvertIntegerPrimitive() throws ObjectConverterException, IOException {
     String className = "int";
 
     Converter.convert(className);
@@ -128,7 +128,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void shouldConvertLong() throws ObjectConverterException, IOException {
+  public void shouldConvertLongPrimitive() throws ObjectConverterException, IOException {
     String className = "long";
 
     Converter.convert(className);
@@ -151,7 +151,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void shouldConvertFloat() throws ObjectConverterException, IOException {
+  public void shouldConvertFloatPrimitive() throws ObjectConverterException, IOException {
     String className = "float";
 
     Converter.convert(className);
@@ -174,7 +174,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void shouldConvertDouble() throws ObjectConverterException, IOException {
+  public void shouldConvertDoublePrimitive() throws ObjectConverterException, IOException {
     String className = "double";
 
     Converter.convert(className);
@@ -197,7 +197,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void shouldConvertByte() throws ObjectConverterException, IOException {
+  public void shouldConvertBytePrimitive() throws ObjectConverterException, IOException {
     String className = "byte";
 
     Converter.convert(className);
@@ -218,7 +218,7 @@ public class ConverterTest {
   }
 
   @Test
-  public void shouldConvertBoolean() throws ObjectConverterException, IOException {
+  public void shouldConvertBooleanPrimitive() throws ObjectConverterException, IOException {
     String className = "boolean";
 
     Converter.convert(className);
@@ -575,6 +575,68 @@ public class ConverterTest {
             "                          type: integer",
             "                          format: int32");
     verifyPathsSection(expectedSchema);
+  }
+  
+  @Test
+  public void shouldConvertListOfString() throws ObjectConverterException, IOException {
+	  String className = "java.util.List<java.lang.String>";
+
+	    Converter.convert(className);
+
+	    List<String> expectedSchema = List.of(
+	    		"            schema:",
+	    		"              type: array",
+	    		"              items:",
+	            "                type: string");
+	    verifyPathsSection(expectedSchema);
+  }
+  
+  @Test
+  public void shouldConvertListOfPublicStringFieldClass() throws ObjectConverterException, IOException {
+	  String className = "java.util.List<de.mcella.openapi.v3.objectconverter.example.PublicStringField>";
+
+	    Converter.convert(className);
+
+	    List<String> expectedSchema = List.of(
+	    		"            schema:",
+	    		"              type: array",
+	    		"              items:",
+	            "                type: object",
+	    		"                properties:",
+	            "                  field:",
+	            "                    type: string");
+	    verifyPathsSection(expectedSchema);
+  }
+  
+  @Test
+  public void shouldConvertMapOfStringToString() throws ObjectConverterException, IOException {
+	  String className = "java.util.Map<java.lang.String, java.lang.String>";
+
+	    Converter.convert(className);
+
+	    List<String> expectedSchema = List.of(
+	    		"            schema:",
+	    		"              type: object",
+	    		"              additionalProperties:",
+	            "                type: string");
+	    verifyPathsSection(expectedSchema);
+  }
+  
+  @Test
+  public void shouldConvertMapOfStringToPublicStringFieldClass() throws ObjectConverterException, IOException {
+	  String className = "java.util.Map<java.lang.String, de.mcella.openapi.v3.objectconverter.example.PublicStringField>";
+
+	    Converter.convert(className);
+
+	    List<String> expectedSchema = List.of(
+	    		"            schema:",
+	    		"              type: object",
+	    		"              additionalProperties:",
+	    		"                type: object",
+	    		"                properties:",
+	            "                  field:",
+	            "                    type: string");
+	    verifyPathsSection(expectedSchema);
   }
 
   private void verifyTemplateSections(

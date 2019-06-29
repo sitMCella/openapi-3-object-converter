@@ -1,7 +1,7 @@
 # Java class conversion to OpenAPI 3 YAML Schema Object
 
-This project builds a Java application used for converting a Java class definition to an OpenAPI 3 YAML document.
-The OpenAPI 3 document generated is compliant to YAML version 1.2 format.
+This project consists of a Java application used for converting a Java class to an OpenAPI 3 YAML Schema Object definition.
+The OpenAPI 3 YAML Schema Object is inserted into an OpenAPI 3 document, compliant with the YAML version 1.2 format.
 
 The official OpenAPI 3 documentation is:
 
@@ -19,13 +19,13 @@ gradlew clean build
 
 ### Run project
 
-cd build/libs
-
 java -jar  build/libs/object-converter-1.0-SNAPSHOT.jar <Java-class-canonical-name>
 
 __Example:__
 
 java -jar build/libs/object-converter-1.0-SNAPSHOT.jar de.mcella.openapi.v3.objectconverter.Example
+
+The generated OpenAPI 3 document is a file named "openapi.yaml".
 
 __Example with external class:__
 
@@ -33,11 +33,11 @@ javac example-external\src\ExampleFromExternal.java -d example-external\classes
 
 java -cp build\libs\*;example-external\classes de.mcella.openapi.v3.objectconverter.ObjectConverterMain  de.mcella.openapi.v3.objectconverter.example.ExampleFromExternal
 
-The OpenAPI 3 document generated is a document named "openapi.yaml".
+The generated OpenAPI 3 document is a file named "openapi.yaml".
 
 ### OpenAPI 3 document validation
 
-Run the following gradle command to validate the generated document:
+Run the following gradle command to validate the generated OpenAPI 3 document:
 
 gradlew openApiValidate
 
@@ -48,7 +48,7 @@ This project follows the Google Java Style, and uses the [google-java-format](ht
 ## Documentation
 
 This application is useful to convert a complex Java class to an OpenAPI 3 Schema Object definition.
-
+The OpenAPI 3 YAML Schema Object is inserted into an OpenAPI 3 document.
 The generated OpenAPI 3 document is a single and complete OpenAPI 3 document with a simple template.
 The converted Java class is inserted as a Schema Object into a sample POST request with body content "application/json".
 
