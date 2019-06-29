@@ -34,7 +34,7 @@ The generated OpenAPI 3 document is a file named "openapi.yaml".
 __Example with external class:__
 
 ```
-javac example-external\src\ExampleFromExternal.java -d example-external\classes
+javac example-external\src\* -d example-external\classes
 
 java -cp build\libs\*;example-external\classes de.mcella.openapi.v3.objectconverter.ObjectConverterMain  de.mcella.openapi.v3.objectconverter.example.ExampleFromExternal
 ```
