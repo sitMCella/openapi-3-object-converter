@@ -20,13 +20,13 @@ Install OpenJDK 11.
 ### Run project
 
 ```
-java -jar  build/libs/object-converter-1.0-SNAPSHOT.jar <Java-class-canonical-name>
+java -jar build/libs/object-converter-0.0.1.jar <Java-class-canonical-name>
 ```
 
 __Example:__
 
 ```
-java -jar build/libs/object-converter-1.0-SNAPSHOT.jar de.mcella.openapi.v3.objectconverter.Example
+java -jar build/libs/object-converter-0.0.1.jar de.mcella.openapi.v3.objectconverter.Example
 ```
 
 The generated OpenAPI 3 document is a file named "openapi.yaml".

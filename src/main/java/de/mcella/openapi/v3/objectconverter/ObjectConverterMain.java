@@ -29,7 +29,7 @@ public class ObjectConverterMain {
 
   private static void printHelp() {
     System.out.println("Usage:");
-    System.out.println("java -jar object-converter-1.0.0.SNAPSHOT.jar className");
+    System.out.println("java -jar object-converter-0.0.1.jar className");
     System.out.println("with className parameter the full class name");
   }
 }
