@@ -27,6 +27,15 @@ public class ConverterFactory implements ConverterService {
     standardDataTypes = new StandardDataTypes();
   }
 
+  ConverterFactory(
+      ObjectConverter objectConverter,
+      CollectionDataTypes collectionDataTypes,
+      StandardDataTypes standardDataTypes) {
+    this.objectConverter = objectConverter;
+    this.collectionDataTypes = collectionDataTypes;
+    this.standardDataTypes = standardDataTypes;
+  }
+
   public static ConverterFactory getInstance() {
     if (converterFactory == null) {
       converterFactory = new ConverterFactory();
