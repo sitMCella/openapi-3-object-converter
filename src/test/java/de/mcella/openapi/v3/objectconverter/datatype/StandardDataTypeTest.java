@@ -86,11 +86,17 @@ public class StandardDataTypeTest {
     String typeName = StandardDataType.BOOLEAN_PRIMITIVE.getTypeName();
     assertThat(typeName, equalTo("boolean"));
   }
-  
+
   @Test
   public void shouldGetLocalDateTypeName() {
     String typeName = StandardDataType.LOCAL_DATE.getTypeName();
     assertThat(typeName, equalTo("java.time.LocalDate"));
+  }
+
+  @Test
+  public void shouldGetOffsetDateTimeTypeName() {
+    String typeName = StandardDataType.OFFSET_DATE_TIME.getTypeName();
+    assertThat(typeName, equalTo("java.time.OffsetDateTime"));
   }
 
   @Test
@@ -183,12 +189,19 @@ public class StandardDataTypeTest {
     StandardDataType standardDataType = StandardDataType.fromTypeName("boolean");
     assertThat(standardDataType, equalTo(StandardDataType.BOOLEAN_PRIMITIVE));
   }
-  
+
   @Test
   public void shouldGetLocalDateStandardDataTypeFromTypeName()
       throws StandardDataTypeNotFoundException {
     StandardDataType standardDataType = StandardDataType.fromTypeName("java.time.LocalDate");
     assertThat(standardDataType, equalTo(StandardDataType.LOCAL_DATE));
+  }
+
+  @Test
+  public void shouldGetOffsetDateTimeStandardDataTypeFromTypeName()
+      throws StandardDataTypeNotFoundException {
+    StandardDataType standardDataType = StandardDataType.fromTypeName("java.time.OffsetDateTime");
+    assertThat(standardDataType, equalTo(StandardDataType.OFFSET_DATE_TIME));
   }
 
   @Test(expected = StandardDataTypeNotFoundException.class)
@@ -261,10 +274,15 @@ public class StandardDataTypeTest {
   public void shouldBooleanPrimitiveTypeNameBeAStandardDataType() {
     assertTrue(StandardDataType.isStandardDataType("boolean"));
   }
-  
+
   @Test
   public void shouldLocalDateTypeNameBeAStandardDataType() {
     assertTrue(StandardDataType.isStandardDataType("java.time.LocalDate"));
+  }
+
+  @Test
+  public void shouldOffsetDateTimeTypeNameBeAStandardDataType() {
+    assertTrue(StandardDataType.isStandardDataType("java.time.OffsetDateTime"));
   }
 
   @Test

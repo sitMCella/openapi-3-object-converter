@@ -79,6 +79,8 @@ The supported OpenAPI 3 data types are the following:
 | string | string | | |
 | byte | string | byte | base64 encoded characters |
 | boolean | boolean | | |
+| date | string | date | As defined by full-date - [RFC3339](https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14) |
+| dateTime | string | date-time | As defined by date-time - [RFC3339](https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14) |
 
 The application supports both Java primitive types and Java wrapper classes.
 
