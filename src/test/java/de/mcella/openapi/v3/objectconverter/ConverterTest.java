@@ -228,6 +228,17 @@ public class ConverterTest {
   }
 
   @Test
+  public void shouldConvertLocalDate() throws ObjectConverterException, IOException {
+    String className = "java.time.LocalDate";
+
+    Converter.convert(className);
+
+    List<String> expectedSchema =
+        List.of("            schema:", "              type: string", "              format: date");
+    verifyPathsSection(expectedSchema);
+  }
+
+  @Test
   public void shouldConvertClassWithOneStringField() throws ObjectConverterException, IOException {
     String className = "de.mcella.openapi.v3.objectconverter.example.PublicStringField";
 
@@ -329,6 +340,24 @@ public class ConverterTest {
             "              properties:",
             "                field:",
             "                  type: string");
+    verifyPathsSection(expectedSchema);
+  }
+
+  @Test
+  public void shouldConvertClassWithOnePublicLocalDateField()
+      throws ObjectConverterException, IOException {
+    String className = "de.mcella.openapi.v3.objectconverter.example.LocalDateField";
+
+    Converter.convert(className);
+
+    List<String> expectedSchema =
+        List.of(
+            "            schema:",
+            "              type: object",
+            "              properties:",
+            "                field:",
+            "                  type: string",
+            "                  format: date");
     verifyPathsSection(expectedSchema);
   }
 
@@ -576,67 +605,75 @@ public class ConverterTest {
             "                          format: int32");
     verifyPathsSection(expectedSchema);
   }
-  
+
   @Test
   public void shouldConvertListOfString() throws ObjectConverterException, IOException {
-	  String className = "java.util.List<java.lang.String>";
+    String className = "java.util.List<java.lang.String>";
 
-	    Converter.convert(className);
+    Converter.convert(className);
 
-	    List<String> expectedSchema = List.of(
-	    		"            schema:",
-	    		"              type: array",
-	    		"              items:",
-	            "                type: string");
-	    verifyPathsSection(expectedSchema);
+    List<String> expectedSchema =
+        List.of(
+            "            schema:",
+            "              type: array",
+            "              items:",
+            "                type: string");
+    verifyPathsSection(expectedSchema);
   }
-  
+
   @Test
-  public void shouldConvertListOfPublicStringFieldClass() throws ObjectConverterException, IOException {
-	  String className = "java.util.List<de.mcella.openapi.v3.objectconverter.example.PublicStringField>";
+  public void shouldConvertListOfPublicStringFieldClass()
+      throws ObjectConverterException, IOException {
+    String className =
+        "java.util.List<de.mcella.openapi.v3.objectconverter.example.PublicStringField>";
 
-	    Converter.convert(className);
+    Converter.convert(className);
 
-	    List<String> expectedSchema = List.of(
-	    		"            schema:",
-	    		"              type: array",
-	    		"              items:",
-	            "                type: object",
-	    		"                properties:",
-	            "                  field:",
-	            "                    type: string");
-	    verifyPathsSection(expectedSchema);
+    List<String> expectedSchema =
+        List.of(
+            "            schema:",
+            "              type: array",
+            "              items:",
+            "                type: object",
+            "                properties:",
+            "                  field:",
+            "                    type: string");
+    verifyPathsSection(expectedSchema);
   }
-  
+
   @Test
   public void shouldConvertMapOfStringToString() throws ObjectConverterException, IOException {
-	  String className = "java.util.Map<java.lang.String, java.lang.String>";
+    String className = "java.util.Map<java.lang.String, java.lang.String>";
 
-	    Converter.convert(className);
+    Converter.convert(className);
 
-	    List<String> expectedSchema = List.of(
-	    		"            schema:",
-	    		"              type: object",
-	    		"              additionalProperties:",
-	            "                type: string");
-	    verifyPathsSection(expectedSchema);
+    List<String> expectedSchema =
+        List.of(
+            "            schema:",
+            "              type: object",
+            "              additionalProperties:",
+            "                type: string");
+    verifyPathsSection(expectedSchema);
   }
-  
+
   @Test
-  public void shouldConvertMapOfStringToPublicStringFieldClass() throws ObjectConverterException, IOException {
-	  String className = "java.util.Map<java.lang.String, de.mcella.openapi.v3.objectconverter.example.PublicStringField>";
+  public void shouldConvertMapOfStringToPublicStringFieldClass()
+      throws ObjectConverterException, IOException {
+    String className =
+        "java.util.Map<java.lang.String, de.mcella.openapi.v3.objectconverter.example.PublicStringField>";
 
-	    Converter.convert(className);
+    Converter.convert(className);
 
-	    List<String> expectedSchema = List.of(
-	    		"            schema:",
-	    		"              type: object",
-	    		"              additionalProperties:",
-	    		"                type: object",
-	    		"                properties:",
-	            "                  field:",
-	            "                    type: string");
-	    verifyPathsSection(expectedSchema);
+    List<String> expectedSchema =
+        List.of(
+            "            schema:",
+            "              type: object",
+            "              additionalProperties:",
+            "                type: object",
+            "                properties:",
+            "                  field:",
+            "                    type: string");
+    verifyPathsSection(expectedSchema);
   }
 
   private void verifyTemplateSections(

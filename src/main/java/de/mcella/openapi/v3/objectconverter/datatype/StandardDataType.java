@@ -13,7 +13,8 @@ public enum StandardDataType {
   BYTE_WRAPPER("java.lang.Byte"),
   BYTE_PRIMITIVE("byte"),
   BOOLEAN_WRAPPER("java.lang.Boolean"),
-  BOOLEAN_PRIMITIVE("boolean");
+  BOOLEAN_PRIMITIVE("boolean"),
+  LOCAL_DATE("java.time.LocalDate");
 
   private final String typeName;
 

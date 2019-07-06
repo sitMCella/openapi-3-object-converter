@@ -17,6 +17,7 @@ public class StandardDataTypes {
     DoubleField doubleField = new DoubleField();
     ByteField byteField = new ByteField();
     BooleanField booleanField = new BooleanField();
+    DateField dateField = new DateField();
     Map<StandardDataType, StandardField> standardDataTypes = new HashMap<>();
     standardDataTypes.put(StandardDataType.STRING, new StringField());
     standardDataTypes.put(StandardDataType.INTEGER_WRAPPER, integerField);
@@ -31,6 +32,7 @@ public class StandardDataTypes {
     standardDataTypes.put(StandardDataType.BYTE_PRIMITIVE, byteField);
     standardDataTypes.put(StandardDataType.BOOLEAN_WRAPPER, booleanField);
     standardDataTypes.put(StandardDataType.BOOLEAN_PRIMITIVE, booleanField);
+    standardDataTypes.put(StandardDataType.LOCAL_DATE, dateField);
     this.standardDataTypes = Collections.unmodifiableMap(standardDataTypes);
   }
 
