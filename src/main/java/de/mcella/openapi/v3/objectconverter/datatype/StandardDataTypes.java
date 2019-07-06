@@ -18,6 +18,7 @@ public class StandardDataTypes {
     ByteField byteField = new ByteField();
     BooleanField booleanField = new BooleanField();
     DateField dateField = new DateField();
+    DateTimeField dateTimeField = new DateTimeField();
     Map<StandardDataType, StandardField> standardDataTypes = new HashMap<>();
     standardDataTypes.put(StandardDataType.STRING, new StringField());
     standardDataTypes.put(StandardDataType.INTEGER_WRAPPER, integerField);
@@ -33,6 +34,7 @@ public class StandardDataTypes {
     standardDataTypes.put(StandardDataType.BOOLEAN_WRAPPER, booleanField);
     standardDataTypes.put(StandardDataType.BOOLEAN_PRIMITIVE, booleanField);
     standardDataTypes.put(StandardDataType.LOCAL_DATE, dateField);
+    standardDataTypes.put(StandardDataType.OFFSET_DATE_TIME, dateTimeField);
     this.standardDataTypes = Collections.unmodifiableMap(standardDataTypes);
   }
 

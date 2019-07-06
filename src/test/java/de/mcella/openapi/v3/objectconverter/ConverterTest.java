@@ -239,6 +239,18 @@ public class ConverterTest {
   }
 
   @Test
+  public void shouldConvertOffsetDateTime() throws ObjectConverterException, IOException {
+    String className = "java.time.OffsetDateTime";
+
+    Converter.convert(className);
+
+    List<String> expectedSchema =
+        List.of(
+            "            schema:", "              type: string", "              format: date-time");
+    verifyPathsSection(expectedSchema);
+  }
+
+  @Test
   public void shouldConvertClassWithOneStringField() throws ObjectConverterException, IOException {
     String className = "de.mcella.openapi.v3.objectconverter.example.PublicStringField";
 
@@ -358,6 +370,24 @@ public class ConverterTest {
             "                field:",
             "                  type: string",
             "                  format: date");
+    verifyPathsSection(expectedSchema);
+  }
+
+  @Test
+  public void shouldConvertClassWithOnePublicOffsetDateTimeField()
+      throws ObjectConverterException, IOException {
+    String className = "de.mcella.openapi.v3.objectconverter.example.OffsetDateTimeField";
+
+    Converter.convert(className);
+
+    List<String> expectedSchema =
+        List.of(
+            "            schema:",
+            "              type: object",
+            "              properties:",
+            "                field:",
+            "                  type: string",
+            "                  format: date-time");
     verifyPathsSection(expectedSchema);
   }
 

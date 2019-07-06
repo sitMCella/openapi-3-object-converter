@@ -93,11 +93,17 @@ public class StandardDataTypesTest {
     StandardField standardField = standardDataTypes.getStandardField("boolean");
     assertTrue(standardField instanceof BooleanField);
   }
-  
+
   @Test
   public void shouldGetStandardFieldFromLocalDateTypeName() throws ObjectConverterException {
     StandardField standardField = standardDataTypes.getStandardField("java.time.LocalDate");
     assertTrue(standardField instanceof DateField);
+  }
+
+  @Test
+  public void shouldGetStandardFieldFromOffsetDateTimeTypeName() throws ObjectConverterException {
+    StandardField standardField = standardDataTypes.getStandardField("java.time.OffsetDateTime");
+    assertTrue(standardField instanceof DateTimeField);
   }
 
   @Test(expected = ObjectConverterException.class)
