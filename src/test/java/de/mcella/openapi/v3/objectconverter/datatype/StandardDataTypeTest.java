@@ -16,19 +16,9 @@ public class StandardDataTypeTest {
   }
 
   @Test
-  public void shouldStringDataTypeNotBePrimitive() {
-    assertFalse(StandardDataType.STRING.isPrimitive());
-  }
-
-  @Test
   public void shouldGetIntegerWrapperTypeName() {
     String typeName = StandardDataType.INTEGER_WRAPPER.getTypeName();
     assertThat(typeName, equalTo("java.lang.Integer"));
-  }
-
-  @Test
-  public void shouldIntegerWrapperDataTypeNotBePrimitive() {
-    assertFalse(StandardDataType.INTEGER_WRAPPER.isPrimitive());
   }
 
   @Test
@@ -38,19 +28,9 @@ public class StandardDataTypeTest {
   }
 
   @Test
-  public void shouldIntegerPrimitiveDataTypeBePrimitive() {
-    assertTrue(StandardDataType.INTEGER_PRIMITIVE.isPrimitive());
-  }
-
-  @Test
   public void shouldGetLongWrapperTypeName() {
     String typeName = StandardDataType.LONG_WRAPPER.getTypeName();
     assertThat(typeName, equalTo("java.lang.Long"));
-  }
-
-  @Test
-  public void shouldLongWrapperDataTypeNotBePrimitive() {
-    assertFalse(StandardDataType.LONG_WRAPPER.isPrimitive());
   }
 
   @Test
@@ -60,19 +40,9 @@ public class StandardDataTypeTest {
   }
 
   @Test
-  public void shouldLongPrimitiveDataTypeBePrimitive() {
-    assertTrue(StandardDataType.LONG_PRIMITIVE.isPrimitive());
-  }
-
-  @Test
   public void shouldGetFloatWrapperTypeName() {
     String typeName = StandardDataType.FLOAT_WRAPPER.getTypeName();
     assertThat(typeName, equalTo("java.lang.Float"));
-  }
-
-  @Test
-  public void shouldFloatWrapperDataTypeNotBePrimitive() {
-    assertFalse(StandardDataType.FLOAT_WRAPPER.isPrimitive());
   }
 
   @Test
@@ -82,19 +52,9 @@ public class StandardDataTypeTest {
   }
 
   @Test
-  public void shouldFloatPrimitiveDataTypeBePrimitive() {
-    assertTrue(StandardDataType.FLOAT_PRIMITIVE.isPrimitive());
-  }
-
-  @Test
   public void shouldGetDoubleWrapperTypeName() {
     String typeName = StandardDataType.DOUBLE_WRAPPER.getTypeName();
     assertThat(typeName, equalTo("java.lang.Double"));
-  }
-
-  @Test
-  public void shouldDoubleWrapperDataTypeNotBePrimitive() {
-    assertFalse(StandardDataType.DOUBLE_WRAPPER.isPrimitive());
   }
 
   @Test
@@ -104,19 +64,9 @@ public class StandardDataTypeTest {
   }
 
   @Test
-  public void shouldDoublePrimitiveDataTypeBePrimitive() {
-    assertTrue(StandardDataType.DOUBLE_PRIMITIVE.isPrimitive());
-  }
-
-  @Test
   public void shouldGetByteWrapperTypeName() {
     String typeName = StandardDataType.BYTE_WRAPPER.getTypeName();
     assertThat(typeName, equalTo("java.lang.Byte"));
-  }
-
-  @Test
-  public void shouldByteWrapperDataTypeNotBePrimitive() {
-    assertFalse(StandardDataType.BYTE_WRAPPER.isPrimitive());
   }
 
   @Test
@@ -126,30 +76,15 @@ public class StandardDataTypeTest {
   }
 
   @Test
-  public void shouldBytePrimitiveDataTypeBePrimitive() {
-    assertTrue(StandardDataType.BYTE_PRIMITIVE.isPrimitive());
-  }
-
-  @Test
   public void shouldGetBooleanWrapperTypeName() {
     String typeName = StandardDataType.BOOLEAN_WRAPPER.getTypeName();
     assertThat(typeName, equalTo("java.lang.Boolean"));
   }
 
   @Test
-  public void shouldBooleanWrapperDataTypeNotBePrimitive() {
-    assertFalse(StandardDataType.BYTE_WRAPPER.isPrimitive());
-  }
-
-  @Test
   public void shouldGetBooleanPrimitiveTypeName() {
     String typeName = StandardDataType.BOOLEAN_PRIMITIVE.getTypeName();
     assertThat(typeName, equalTo("boolean"));
-  }
-
-  @Test
-  public void shouldBooleanPrimitiveDataTypeBePrimitive() {
-    assertTrue(StandardDataType.BOOLEAN_PRIMITIVE.isPrimitive());
   }
 
   @Test
