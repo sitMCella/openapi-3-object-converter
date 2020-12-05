@@ -1,11 +1,13 @@
 # Java class conversion to OpenAPI 3 YAML Schema Object
 
-This project consists of a Java application used for converting a Java class to an OpenAPI 3 YAML Schema Object definition.
+This project consists of a Java application used for converting a Java class to a free-form object in OpenAPI 3 YAML 
+Schema Object definition.
+
+This implementation is an extension of the free-form query parameter definition in OpenAPI 3 specification.
+
 The OpenAPI 3 YAML Schema Object is inserted into an OpenAPI 3 document, compliant with the YAML version 1.2 format.
 
-The official OpenAPI 3 documentation is:
-
-[OpenAPI 3.0.0 documentation](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md)
+The official OpenAPI 3 documentation is: [OpenAPI 3.0.0 documentation](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md)
 
 ## Development
 
@@ -15,7 +17,9 @@ Install OpenJDK 11.
 
 ### Build project
 
-  gradlew clean build
+```
+gradlew clean build
+```
 
 ### Run project
 
@@ -29,17 +33,26 @@ __Example:__
 java -jar build/libs/object-converter-0.0.2-SNAPSHOT.jar de.mcella.openapi.v3.objectconverter.Example
 ```
 
-The generated OpenAPI 3 document is a file named "openapi.yaml".
+The generated OpenAPI 3 document is the file "build/libs/openapi.yaml".
 
 __Example with external class:__
 
 ```
 javac example-external\src\* -d example-external\classes
-
-java -cp build\libs\*;example-external\classes de.mcella.openapi.v3.objectconverter.ObjectConverterMain  de.mcella.openapi.v3.objectconverter.example.ExampleFromExternal
 ```
 
-The generated OpenAPI 3 document is a file named "openapi.yaml".
+Windows:
+
+```
+java -cp build\libs\*;example-external\classes de.mcella.openapi.v3.objectconverter.ObjectConverterMain  de.mcella.openapi.v3.objectconverter.example.ExampleFromExternal
+```
+Linux and MacOS:
+
+```
+java -cp "build/libs/*:example-external/classes:." de.mcella.openapi.v3.objectconverter.ObjectConverterMain de.mcella.openapi.v3.objectconverter.example.ExampleFromExternal
+```
+
+The generated OpenAPI 3 document is a file named "build/libs/openapi.yaml".
 
 ### OpenAPI 3 document validation
 
@@ -55,7 +68,7 @@ This project follows the Google Java Style, and uses the [google-java-format](ht
 
 ## Documentation
 
-This application is useful to convert a complex Java class to an OpenAPI 3 Schema Object definition.
+This application is useful to convert a complex Java class to an OpenAPI 3 Schema free-form object definition.
 
 The OpenAPI 3 YAML Schema Object is inserted into an OpenAPI 3 document.
 The generated OpenAPI 3 document is a single and complete OpenAPI 3 document with a simple template.

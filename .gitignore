@@ -2,6 +2,8 @@
 
 example-external/classes/
 
+example-user-external/classes/
+
 ### Eclipse ###
 .metadata
 bin/
